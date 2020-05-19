@@ -14,49 +14,55 @@ import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import io.sjcdigital.model.Months;
 import io.sjcdigital.model.Person;
 
 @ApplicationScoped
 public class DeathsScrapper {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DeathsScrapper.class);
+	
 	@ConfigProperty(name = "scrapper.agent")
-	private String agent;
+	String agent;
 	
 	@ConfigProperty(name = "scrapper.url")
-	private String url;
+	String url;
 	
 	@ConfigProperty(name = "scrapper.timeout")
-	private int timeout;
+	int timeout;
 
 	@ConfigProperty(name = "scrapper.data.month")
-	private String month;
+	String month;
 
 	@ConfigProperty(name = "scrapper.data.year")
-	private String year;
+	String year;
 
 	@ConfigProperty(name = "scrapper.data.name")
-	private String name;
+	String name;
 	
 	public Map<String, List<Person>> getDeathsByYear(final String year) {
-		return getDeathsPersonsInAYear(year);
+		LOGGER.info("get informations for year: " + year);
+		return getDeathPersonsInAYear(year);
 	}
 
-	private Map<String, List<Person>> getDeathsPersonsInAYear(final String year) {
+	private Map<String, List<Person>> getDeathPersonsInAYear(final String year) {
 		
 		Map<String, List<Person>> deathsInAYear = new HashMap<>();
+		Months[] months = Months.values();
 		
-		for(Integer month = 1; month <= 12; month++) {
-			
-			Elements deathNoteElements = getDeathNote(year, month.toString());
-			deathsInAYear.put(month.toString(), parseElementsToPerson(deathNoteElements));
+		for (int i = 0; i < months.length; i++) {
+			Elements deathNoteElements = getDeathNote(year, months[i].getValue().toString());
+			deathsInAYear.put(months[i].name().toLowerCase(), parseElementsToPerson(deathNoteElements));
 		}
 		
 		return deathsInAYear;
 	}
 
 
-	private List<Person> parseElementsToPerson(Elements deathNoteElements) {
+	private List<Person> parseElementsToPerson(final Elements deathNoteElements) {
 		
 		List<Person> persons = new LinkedList<Person>();
 		
