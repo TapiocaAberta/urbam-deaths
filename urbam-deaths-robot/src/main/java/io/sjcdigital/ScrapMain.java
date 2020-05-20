@@ -40,8 +40,10 @@ public class ScrapMain implements QuarkusApplication {
 			}
 			
 		} else if("csv".equalsIgnoreCase(fileType)) {
-			//TODO: implement csv
-			LOGGER.error("CSV is not implemented yet!");
+			
+			for (int i = 0; i < years.length; i++) {
+				fileService.saveAsCSVFile(years[i], scrapper.getDeathsByYear(years[i]));
+			}
 		}
 		
 		return 0;

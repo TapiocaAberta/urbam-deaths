@@ -22,10 +22,56 @@ import io.sjcdigital.model.Person;
 public class FileService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileService.class);
+	private static final char DEFAULT_SEPARATOR = ',';
 	
 	@ConfigProperty(name = "file.path")
 	private String path;
 	
+	public void saveAsCSVFile(final String year, final Map<String, List<Person>> deaths) {
+		
+		String directoryName = path + year + "/csv/";
+		createDirectoryIfDoesntExists(directoryName);
+		
+		deaths.forEach((k, v) -> createCSVFile(directoryName, k, v) );
+	}
+
+	private void createCSVFile(String directoryName, String month, List<Person> deathPersons) {
+		
+		StringBuilder csvContent = buildCSVContent(deathPersons);
+		
+		try {
+			
+			Files.write(Paths.get(directoryName + month + ".csv"), csvContent.toString().getBytes());
+			
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	private StringBuilder buildCSVContent(List<Person> deathPersons) {
+		
+		String header = "name,age,deathday,birthday\n";
+		StringBuilder csvContent = new StringBuilder(header);
+		
+		for (Person person : deathPersons) {
+			csvContent.append(person.getName());
+			csvContent.append(DEFAULT_SEPARATOR);
+			csvContent.append(person.getAge());
+			csvContent.append(DEFAULT_SEPARATOR);
+			csvContent.append(person.getDeathday());
+			csvContent.append(DEFAULT_SEPARATOR);
+			csvContent.append(person.getBirthday());
+			csvContent.append("\n");
+		}
+		
+		return csvContent;
+	}
+
 	public void saveAsJsonFile(final String year, final Map<String, List<Person>> deaths) {
 		
 		String directoryName = path + year + "/json/";
