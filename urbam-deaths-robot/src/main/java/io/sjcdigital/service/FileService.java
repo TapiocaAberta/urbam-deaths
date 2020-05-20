@@ -60,7 +60,7 @@ public class FileService {
 
 	private StringBuilder buildCSVContent(List<Person> deathPersons) {
 		
-		String header = "name,age,deathday,birthday\n";
+		String header = "name,age,deathday,birthday,funeral,burial\n";
 		StringBuilder csvContent = new StringBuilder(header);
 		
 		for (Person person : deathPersons) {
@@ -71,6 +71,10 @@ public class FileService {
 			csvContent.append(person.getDeathday());
 			csvContent.append(DEFAULT_SEPARATOR);
 			csvContent.append(person.getBirthday());
+			csvContent.append(DEFAULT_SEPARATOR);
+			csvContent.append(person.getFuneral());
+			csvContent.append(DEFAULT_SEPARATOR);
+			csvContent.append(person.getBurial());
 			csvContent.append("\n");
 		}
 		
