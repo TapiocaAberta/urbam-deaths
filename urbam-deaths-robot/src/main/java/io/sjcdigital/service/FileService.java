@@ -18,6 +18,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.sjcdigital.model.Person;
 
+/**
+ * 
+ * @author pedro-hos
+ *
+ */
 @ApplicationScoped
 public class FileService {
 	
@@ -25,7 +30,7 @@ public class FileService {
 	private static final char DEFAULT_SEPARATOR = ',';
 	
 	@ConfigProperty(name = "file.path")
-	private String path;
+	String path;
 	
 	public void saveAsCSVFile(final String year, final Map<String, List<Person>> deaths) {
 		

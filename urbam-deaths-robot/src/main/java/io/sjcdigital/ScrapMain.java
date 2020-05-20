@@ -10,6 +10,12 @@ import io.quarkus.runtime.annotations.QuarkusMain;
 import io.sjcdigital.service.DeathsScrapper;
 import io.sjcdigital.service.FileService;
 
+/**
+ * 
+ * @author pedro-hos
+ *
+ */
+
 @QuarkusMain
 public class ScrapMain implements QuarkusApplication {
 

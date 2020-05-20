@@ -1,5 +1,10 @@
 package io.sjcdigital.model;
 
+/**
+ * 
+ * @author pedro-hos
+ *
+ */
 public enum Months {
 	
 	JANEIRO(1),

@@ -20,6 +20,12 @@ import org.slf4j.LoggerFactory;
 import io.sjcdigital.model.Months;
 import io.sjcdigital.model.Person;
 
+/**
+ * 
+ * @author pedro-hos
+ *
+ */
+
 @ApplicationScoped
 public class DeathsScrapper {
 	
@@ -61,20 +67,19 @@ public class DeathsScrapper {
 		return deathsInAYear;
 	}
 
-
 	private List<Person> parseElementsToPerson(final Elements deathNoteElements) {
 		
 		List<Person> persons = new LinkedList<Person>();
 		
 		for (Element element : deathNoteElements) {
 			
-			Elements row = element.select("div.row");
-			
 			persons.add(Person.builder()
-							  .name(row.select("h3").text())
-							  .age(row.select("span:contains(Idade:)").next("span").text())
-							  .birthday(row.select("span:contains(Data de nascimento:)").next("span").text())
-							  .deathday(row.select("span:contains(Data de falecimento:)").next("span").text())
+							  .name(element.select("h3").text())
+							  .age(element.select("span:contains(Idade:)").next("span").text())
+							  .birthday(element.select("span:contains(Data de nascimento:)").next("span").text())
+							  .deathday(element.select("span:contains(Data de falecimento:)").next("span").text())
+							  .funeral((element.select("span:contains(Velório:)").nextAll("span").text()))
+							  .burial(element.select("span:contains(Sepultamento:)").nextAll("span").text())
 							  .build());
 		}
 		

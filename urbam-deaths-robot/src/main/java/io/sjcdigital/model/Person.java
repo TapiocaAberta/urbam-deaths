@@ -1,11 +1,19 @@
 package io.sjcdigital.model;
 
+/**
+ * 
+ * @author pedro-hos
+ *
+ */
+
 public class Person {
 
 	private String name;
 	private String age;
 	private String deathday;
 	private String birthday;
+	private String funeral;
+	private String burial;
 	
 	public static PersonBuilder builder() {
 		return new PersonBuilder();
@@ -41,5 +49,21 @@ public class Person {
 
 	public void setBirthday(String birthdate) {
 		this.birthday = birthdate;
+	}
+
+	public String getFuneral() {
+		return funeral;
+	}
+
+	public void setFuneral(String funeral) {
+		this.funeral = funeral;
+	}
+
+	public String getBurial() {
+		return burial;
+	}
+
+	public void setBurial(String burial) {
+		this.burial = burial;
 	}
 }

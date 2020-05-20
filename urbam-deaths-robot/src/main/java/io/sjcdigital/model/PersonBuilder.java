@@ -1,5 +1,11 @@
 package io.sjcdigital.model;
 
+/**
+ * 
+ * @author pedro-hos
+ *
+ */
+
 public class PersonBuilder {
 
 	private Person person;
@@ -25,6 +31,16 @@ public class PersonBuilder {
 	
 	public PersonBuilder deathday(final String deathday) {
 		this.person.setDeathday(deathday);
+		return this;
+	}
+	
+	public PersonBuilder funeral(final String funeral) {
+		this.person.setFuneral(funeral);
+		return this;
+	}
+	
+	public PersonBuilder burial(final String burial) {
+		this.person.setBurial(burial);
 		return this;
 	}
 	
