@@ -17,8 +17,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.sjcdigital.model.Months;
-import io.sjcdigital.model.Person;
+import io.sjcdigital.model.entity.Months;
+import io.sjcdigital.model.entity.Person;
 
 /**
  * 
@@ -61,13 +61,13 @@ public class DeathsScrapper {
 		
 		for (int i = 0; i < months.length; i++) {
 			Elements deathNoteElements = getDeathNote(year, months[i].getValue().toString());
-			deathsInAYear.put(months[i].name().toLowerCase(), parseElementsToPerson(deathNoteElements));
+			deathsInAYear.put(months[i].name().toLowerCase(), parseElementsToPerson(deathNoteElements, year, months[i].name()));
 		}
 		
 		return deathsInAYear;
 	}
 
-	private List<Person> parseElementsToPerson(final Elements deathNoteElements) {
+	private List<Person> parseElementsToPerson(final Elements deathNoteElements, final String yearDeath, final String monthDeath) {
 		
 		List<Person> persons = new LinkedList<Person>();
 		
@@ -80,6 +80,8 @@ public class DeathsScrapper {
 							  .deathday(element.select("span:contains(Data de falecimento:)").next("span").text())
 							  .funeral((element.select("span:contains(Velório:)").nextAll("span").text()))
 							  .burial(element.select("span:contains(Sepultamento:)").nextAll("span").text())
+							  .yearDeath(yearDeath)
+							  .monthDeath(monthDeath)
 							  .build());
 		}
 		

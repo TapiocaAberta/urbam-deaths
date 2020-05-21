@@ -1,4 +1,4 @@
-package io.sjcdigital.model;
+package io.sjcdigital.model.entity;
 
 /**
  * 

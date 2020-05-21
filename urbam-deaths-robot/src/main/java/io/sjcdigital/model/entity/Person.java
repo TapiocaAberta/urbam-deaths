@@ -1,4 +1,8 @@
-package io.sjcdigital.model;
+package io.sjcdigital.model.entity;
+
+import javax.persistence.Entity;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 /**
  * 
@@ -6,7 +10,8 @@ package io.sjcdigital.model;
  *
  */
 
-public class Person {
+@Entity(name = "person")
+public class Person extends PanacheEntity {
 
 	private String name;
 	private String age;
@@ -14,6 +19,8 @@ public class Person {
 	private String birthday;
 	private String funeral;
 	private String burial;
+	private String yearDeath;
+	private String monthDeath;
 	
 	public static PersonBuilder builder() {
 		return new PersonBuilder();
@@ -65,5 +72,21 @@ public class Person {
 
 	public void setBurial(String burial) {
 		this.burial = burial;
+	}
+
+	public String getYearDeath() {
+		return yearDeath;
+	}
+
+	public void setYearDeath(String yearDeath) {
+		this.yearDeath = yearDeath;
+	}
+
+	public String getMonthDeath() {
+		return monthDeath;
+	}
+
+	public void setMonthDeath(String monthDeath) {
+		this.monthDeath = monthDeath;
 	}
 }

@@ -1,11 +1,10 @@
-package io.sjcdigital.model;
+package io.sjcdigital.model.entity;
 
 /**
  * 
  * @author pedro-hos
  *
  */
-
 public class PersonBuilder {
 
 	private Person person;
@@ -41,6 +40,16 @@ public class PersonBuilder {
 	
 	public PersonBuilder burial(final String burial) {
 		this.person.setBurial(burial);
+		return this;
+	}
+	
+	public PersonBuilder yearDeath(final String yearDeath) {
+		this.person.setYearDeath(yearDeath);;
+		return this;
+	}
+	
+	public PersonBuilder monthDeath(final String monthDeath) {
+		this.person.setMonthDeath(monthDeath);
 		return this;
 	}
 	
