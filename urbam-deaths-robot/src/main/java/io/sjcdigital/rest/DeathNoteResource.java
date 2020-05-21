@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import io.sjcdigital.model.entity.CountDTO;
 import io.sjcdigital.model.entity.Person;
@@ -95,8 +96,6 @@ public class DeathNoteResource {
 	@Transactional
 	public Response save(final List<String> years) {
 		
-		System.out.println(years.size());
-		
 		for (String year : years) {
 			
 			scrapper.getDeathsByYear(year).forEach((k, v) -> {
@@ -105,7 +104,7 @@ public class DeathNoteResource {
 			
 		}
 		
-		return Response.ok().build();
+		return Response.status(Status.CREATED).build();
 	}
 
 }
