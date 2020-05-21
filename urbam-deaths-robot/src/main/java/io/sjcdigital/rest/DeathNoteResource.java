@@ -92,9 +92,12 @@ public class DeathNoteResource {
 		
 	}
 	
+	
 	@POST
 	@Transactional
 	public Response save(final List<String> years) {
+		
+		// curl -X POST -v -H "Content-Type: application/json" -d '[2020]' "http://localhost:8080/api/deaths"
 		
 		for (String year : years) {
 			
