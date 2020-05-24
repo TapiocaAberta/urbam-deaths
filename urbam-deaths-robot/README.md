@@ -18,3 +18,4 @@ You can run your application in dev mode that enables live coding using:
 
 * The first argument is a list with the year that you want to get information;
 * The second argumento is the file format. You should choose beetween `json` or `csv` file;
+
