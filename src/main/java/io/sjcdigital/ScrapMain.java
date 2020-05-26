@@ -34,7 +34,7 @@ public class ScrapMain implements QuarkusApplication {
 		
 		if (args.length == 0) {
 			
-			LOGGER.info("NO parameters. If you want, use: ./mvnw compile quarkus:dev -Dquarkus.args='2019,2020,2018 json\'");
+			LOGGER.info("NO parameters. If you want, use: ./mvnw compile quarkus:dev -Dquarkus.args='2019,2020,2018 1,2,3,12 json\'");
 			Quarkus.waitForExit();
 		
 		} else {
@@ -42,9 +42,10 @@ public class ScrapMain implements QuarkusApplication {
 			LOGGER.info("Scrapping deaths from years: " + args[0] + " and saving in " + args[1] + " format");
 
 			String[] years = args[0].split(",");
-			String fileType = args[1];
+			String[] months = args[1].split(",");
+			String fileType = args[2];
 
-			fileService.save(fileType, years);
+			fileService.save(fileType, years, months);
 		}
 		
 		return 0;

@@ -26,10 +26,33 @@ public enum Months {
 		this.value = value; 
 	}
 	
-	public Integer getValue() {
-		return this.value; 
+	public static Months[] getMonthByValue(String ... values) {
+		
+		Months[] months = new Months[values.length];
+		
+		for (int i = 0; i < values.length; i++) {
+			months[i] = withValue(Integer.valueOf(values[i]));
+		}
+		
+		return months;
 	}
 	
 	
-	 
+	public Integer value() {
+		return this.value; 
+	}
+	
+	public static Months withValue(final Integer value) {
+		
+		Months[] monthList = values();
+		
+		for (int i = 0; i < monthList.length; i++) {
+			if(monthList[i].value == value) {
+				return monthList[i];
+			}
+		}
+		
+		return null;
+	}
+	
 }

@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 
 import io.sjcdigital.model.entity.CountDTO;
 import io.sjcdigital.model.entity.Person;
+import io.sjcdigital.model.entity.ScrapDTO;
 import io.sjcdigital.model.repository.PersonRepository;
 import io.sjcdigital.service.DeathsScrapper;
 import io.sjcdigital.service.SaveDataService;
@@ -95,13 +96,14 @@ public class DeathNoteResource {
 	
 	@POST
 	@Transactional
-	public Response save(final List<String> years) {
+	public Response save(final ScrapDTO scrap) {
 		
-		// curl -X POST -v -H "Content-Type: application/json" -d '[2020]' "http://localhost:8080/api/deaths"
+		// curl -X POST "http://localhost:8080/api/deaths" -H "accept: */*" -H "Content-Type: application/json" 
+		//-d "{\"months\":[\"5\"],\"years\":[\"2020\"]}"
 		
-		for (String year : years) {
+		for (String year : scrap.getYears()) {
 			
-			scrapper.getDeathsByYear(year).forEach((k, v) -> {
+			scrapper.getDeathsByYearAndMonth(year, scrap.getMonths()).forEach((k, v) -> {
 				v.forEach(p -> Person.persist(p));
 			});
 			

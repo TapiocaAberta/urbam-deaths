@@ -53,19 +53,27 @@ public class DeathsScrapper {
 		LOGGER.info("get informations for year: " + year);
 		return getDeathPersonsInAYear(year);
 	}
-
-	private Map<String, List<Person>> getDeathPersonsInAYear(final String year) {
+	
+	public Map<String, List<Person>> getDeathsByYearAndMonth(final String year, final String ...monthsOrdinal ) {
+		LOGGER.info("get informations for year: " + year + " and Months");
+		return getDeathPersonsByMonthAndYear(year, Months.getMonthByValue(monthsOrdinal));
+	}
 		
+	private Map<String, List<Person>> getDeathPersonsInAYear(final String year) {
+		return getDeathPersonsByMonthAndYear(year, Months.values());
+	}
+	
+	public Map<String, List<Person>> getDeathPersonsByMonthAndYear(final String year, final Months... months) {
 		Map<String, List<Person>> deathsInAYear = new HashMap<>();
-		Months[] months = Months.values();
 		
 		for (int i = 0; i < months.length; i++) {
-			Elements deathNoteElements = getDeathNote(year, months[i].getValue().toString());
+			Elements deathNoteElements = getDeathNote(year, months[i].value().toString());
 			deathsInAYear.put(months[i].name().toLowerCase(), parseElementsToPerson(deathNoteElements, year, months[i].name()));
 		}
 		
 		return deathsInAYear;
 	}
+
 
 	private List<Person> parseElementsToPerson(final Elements deathNoteElements, final String yearDeath, final String monthDeath) {
 		
