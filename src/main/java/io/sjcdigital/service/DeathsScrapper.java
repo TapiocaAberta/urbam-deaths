@@ -75,7 +75,7 @@ public class DeathsScrapper {
 			
 			persons.add(Person.builder()
 							  .name(element.select("h3").text())
-							  .age(element.select("span:contains(Idade:)").next("span").text())
+							  .age(Integer.valueOf(element.select("span:contains(Idade:)").next("span").text()))
 							  .birthday(element.select("span:contains(Data de nascimento:)").next("span").text())
 							  .deathday(element.select("span:contains(Data de falecimento:)").next("span").text())
 							  .funeral((element.select("span:contains(Velório:)").nextAll("span").text()))

@@ -18,7 +18,7 @@ public class PersonBuilder {
 		return this;
 	}
 	
-	public PersonBuilder age(final String age) {
+	public PersonBuilder age(final Integer age) {
 		this.person.setAge(age);
 		return this;
 	}

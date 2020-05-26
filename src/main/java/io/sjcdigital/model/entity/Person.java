@@ -14,7 +14,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 public class Person extends PanacheEntity {
 
 	private String name;
-	private String age;
+	private Integer age;
 	private String deathday;
 	private String birthday;
 	private String funeral;
@@ -34,11 +34,11 @@ public class Person extends PanacheEntity {
 		this.name = name;
 	}
 
-	public String getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
