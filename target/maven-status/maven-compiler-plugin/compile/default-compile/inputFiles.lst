@@ -1,0 +1,12 @@
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/model/entity/CountDTO.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/service/CSVFileService.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/service/FileService.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/service/DeathsScrapper.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/model/entity/Months.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/model/entity/PersonBuilder.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/model/entity/Person.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/model/repository/PersonRepository.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/rest/DeathNoteResource.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/ScrapMain.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/service/SaveDataService.java
+/opt/workspace/code/urbam-deaths/src/main/java/io/sjcdigital/service/JSONFileService.java

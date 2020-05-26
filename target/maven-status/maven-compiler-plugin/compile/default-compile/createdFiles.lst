@@ -1,0 +1,12 @@
+io/sjcdigital/model/entity/PersonBuilder.class
+io/sjcdigital/model/entity/Person.class
+io/sjcdigital/service/CSVFileService.class
+io/sjcdigital/rest/DeathNoteResource.class
+io/sjcdigital/service/DeathsScrapper.class
+io/sjcdigital/service/JSONFileService.class
+io/sjcdigital/service/FileService.class
+io/sjcdigital/model/repository/PersonRepository.class
+io/sjcdigital/service/SaveDataService.class
+io/sjcdigital/ScrapMain.class
+io/sjcdigital/model/entity/CountDTO.class
+io/sjcdigital/model/entity/Months.class
