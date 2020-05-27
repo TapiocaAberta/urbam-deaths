@@ -1,4 +1,4 @@
-package io.sjcdigital.model.entity;
+package io.sjcdigital.model.dto;
 
 public class ScrapDTO {
 	

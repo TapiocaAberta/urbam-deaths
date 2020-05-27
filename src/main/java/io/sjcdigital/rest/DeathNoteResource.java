@@ -1,6 +1,8 @@
 package io.sjcdigital.rest;
 
 import java.net.HttpURLConnection;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,10 +20,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import io.sjcdigital.model.entity.CountDTO;
-import io.sjcdigital.model.entity.Person;
-import io.sjcdigital.model.entity.ScrapDTO;
-import io.sjcdigital.model.repository.PersonRepository;
+import io.sjcdigital.model.dto.CountDTO;
+import io.sjcdigital.model.dto.ScrapDTO;
+import io.sjcdigital.model.entities.Months;
+import io.sjcdigital.model.entities.Person;
+import io.sjcdigital.model.repositories.PersonRepository;
 import io.sjcdigital.service.DeathsScrapper;
 import io.sjcdigital.service.SaveDataService;
 
@@ -47,16 +50,52 @@ public class DeathNoteResource {
 	}
 	
 	@GET
-	@Path("/direto/count")
-	public Response countFuneralDiretoByYearAndMonthAndAge( @QueryParam("year") final String year,
-													        @QueryParam("month") final String month,
-													        @QueryParam("byAge") final boolean byAge ) {
+	@Path("/direto/compare")
+	public Response compareMonths() {
 		
-		CountDTO count = new CountDTO();
-		count.setFuneral("DIRETO");
-		count.setMonth(month);
-		count.setYear(year);
-		count.setNonZeroAge(byAge);
+		List<CountDTO> values = new LinkedList<>();
+		
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime lastYear = now.minusYears(1);
+		
+		int month = now.minusMonths(1).getMonthValue();
+		
+		while(month != 0) {
+			
+			Months monthEnum = Months.withValue(month);
+			
+			values.add(CountDTO.create().funeral("DIRETO")
+									    .count(repository.countFuneralDiretoByYearAndMonthAndAge(String.valueOf(now.getYear()), monthEnum.name()))
+									    .month(monthEnum.name())
+									    .year(String.valueOf(now.getYear()))
+									    .nonZeroAge(true)
+									    .build());
+			
+			values.add(CountDTO.create().funeral("DIRETO")
+									    .count(repository.countFuneralDiretoByYearAndMonthAndAge(String.valueOf(lastYear.getYear()), monthEnum.name()))
+									    .month(monthEnum.name())
+									    .year(String.valueOf(lastYear.getYear()))
+									    .nonZeroAge(true)
+									    .build());
+			
+			month--;
+		}
+		
+		return Response.ok(values).build();
+	}
+	
+	@GET
+	@Path("/direto/count")
+	public Response countFuneralDiretoByYearMonthAndAge( @QueryParam("year") final String year,
+													     @QueryParam("month") final String month,
+													     @QueryParam("byAge") final boolean byAge ) {
+		
+		CountDTO count = CountDTO.create()
+								 .funeral("DIRETO")
+								 .month(month)
+								 .year(year)
+								 .nonZeroAge(byAge)
+								 .build();
 		
 		if(byAge) {
 			count.setCount(repository.countFuneralDiretoByYearAndMonthAndAge(year, month));

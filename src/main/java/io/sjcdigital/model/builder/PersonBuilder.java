@@ -1,4 +1,6 @@
-package io.sjcdigital.model.entity;
+package io.sjcdigital.model.builder;
+
+import io.sjcdigital.model.entities.Person;
 
 /**
  * 

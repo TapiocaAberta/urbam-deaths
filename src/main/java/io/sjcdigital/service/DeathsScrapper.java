@@ -17,8 +17,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.sjcdigital.model.entity.Months;
-import io.sjcdigital.model.entity.Person;
+import io.sjcdigital.model.entities.Months;
+import io.sjcdigital.model.entities.Person;
 
 /**
  * 
@@ -81,7 +81,7 @@ public class DeathsScrapper {
 		
 		for (Element element : deathNoteElements) {
 			
-			persons.add(Person.builder()
+			persons.add(Person.create()
 							  .name(element.select("h3").text())
 							  .age(Integer.valueOf(element.select("span:contains(Idade:)").next("span").text()))
 							  .birthday(element.select("span:contains(Data de nascimento:)").next("span").text())

@@ -1,11 +1,11 @@
-package io.sjcdigital.model.repository;
+package io.sjcdigital.model.repositories;
 
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import io.sjcdigital.model.entity.Person;
+import io.sjcdigital.model.entities.Person;
 
 @ApplicationScoped
 public class PersonRepository implements PanacheRepository<Person> {

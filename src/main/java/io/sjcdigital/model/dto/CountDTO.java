@@ -1,4 +1,6 @@
-package io.sjcdigital.model.entity;
+package io.sjcdigital.model.dto;
+
+import io.sjcdigital.model.builder.CountDTOBuilder;
 
 public class CountDTO {
 	
@@ -7,6 +9,10 @@ public class CountDTO {
 	private String funeral;
 	private long count;
 	private boolean nonZeroAge = false;
+	
+	public static CountDTOBuilder create() {
+		return new CountDTOBuilder();
+	}
 	
 	public String getMonth() {
 		return month;

@@ -1,8 +1,9 @@
-package io.sjcdigital.model.entity;
+package io.sjcdigital.model.entities;
 
 import javax.persistence.Entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.sjcdigital.model.builder.PersonBuilder;
 
 /**
  * 
@@ -22,7 +23,7 @@ public class Person extends PanacheEntity {
 	private String yearDeath;
 	private String monthDeath;
 	
-	public static PersonBuilder builder() {
+	public static PersonBuilder create() {
 		return new PersonBuilder();
 	}
 

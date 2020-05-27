@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.quarkus.scheduler.Scheduled;
-import io.sjcdigital.model.entity.Months;
-import io.sjcdigital.model.entity.Person;
+import io.sjcdigital.model.entities.Months;
+import io.sjcdigital.model.entities.Person;
 
 /**
  * 

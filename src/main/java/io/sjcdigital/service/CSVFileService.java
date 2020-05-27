@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import io.sjcdigital.model.entity.Person;
+import io.sjcdigital.model.entities.Person;
 
 /**
  * 
