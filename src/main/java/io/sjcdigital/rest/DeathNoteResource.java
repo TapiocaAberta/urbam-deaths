@@ -48,7 +48,7 @@ public class DeathNoteResource {
 	public Response findFuneralDiretoByYearAndMonth(@QueryParam("year") final String year, @QueryParam("month") final String month) {
 		return Response.ok(repository.findFuneralDireto(year, month)).build();
 	}
-	
+
 	@GET
 	@Path("/direto/compare")
 	public Response compareMonths() {
