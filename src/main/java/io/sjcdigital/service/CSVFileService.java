@@ -78,7 +78,6 @@ public class CSVFileService extends FileService {
         if (v instanceof CharSequence) {
             String escaped = ((String) v).replaceAll(TEXT_ENCLOSER, "\\\\" + TEXT_ENCLOSER + "");
             return TEXT_ENCLOSER + escaped + TEXT_ENCLOSER;
-                               
         }
 
         return v.toString();
