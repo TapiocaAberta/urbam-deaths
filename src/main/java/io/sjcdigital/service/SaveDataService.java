@@ -63,7 +63,7 @@ public class SaveDataService {
         }
     }
 
-    @Scheduled(cron = "{cron.expr}")
+    //@Scheduled(cron = "{cron.expr}")
     public void saveCurrentMonthAndYearData() {
 
         LOGGER.info("Starting cron ....");
