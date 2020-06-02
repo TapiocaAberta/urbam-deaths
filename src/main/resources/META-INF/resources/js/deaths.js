@@ -37,12 +37,9 @@ google.charts.setOnLoadCallback(drawChart2);
       
       function callEndpoint2() {
   	    $.getJSON('/api/deaths/direto/days/last-mount/compare', function(data) {
-  	    	this.daysData = data;
+  	    	daysData = data;
   	    });
     }
-      
-      callEndpoint();
-      callEndpoint2();
       
       function drawChart() {
     	  
@@ -104,4 +101,7 @@ google.charts.setOnLoadCallback(drawChart2);
          var chart = new google.charts.Line(document.getElementById('chart_months_days'));
          chart.draw(data, google.charts.Line.convertOptions(options));
        }
+      
+          callEndpoint();
+          callEndpoint2();
       
