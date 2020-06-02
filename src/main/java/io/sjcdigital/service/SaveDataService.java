@@ -8,11 +8,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
-import io.quarkus.scheduler.Scheduled;
-import io.sjcdigital.model.entities.Months;
-import io.sjcdigital.model.entities.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.sjcdigital.model.entities.Months;
+import io.sjcdigital.model.entities.Person;
 
 /**
  * 

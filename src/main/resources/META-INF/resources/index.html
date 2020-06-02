@@ -6,83 +6,6 @@
     
      <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    
-      //google.charts.load('current', {'packages':['bar']});
-      google.charts.load('current', {'packages':['line']});
-      google.charts.setOnLoadCallback(drawChart);
-      
-      var values = [["JANEIRO", 0, 0],
-   	  				["FEVEREIRO", 0, 0],
-   	  				["MARCO", 0, 0],
-   	  				["ABRIL", 0, 0],
-   	  				["MAIO", 0, 0],
-   	  			    ["JUNHO", 0, 0],
-   	  				["JULHO", 0, 0],
-   	  				["AGOSTO", 0, 0],
-   	  				["SETEMBRO", 0, 0],
-   	  				["OUTUBRO", 0, 0],
-   	  				["NOVEMBRO", 0, 0],
-   	  				["DEZEMBRO", 0, 0]];
-      
-      function callEndpoint() {
-    	    $.getJSON('/api/deaths/direto/compare', function(data) {
-    	    	
-    	    	for(var i = 0; i < values.length; i++) {
-    	    		for(var j = 0 in data) {
-    	    			if(values[i][0] === data[j].month) {
-    	    				
-    	    				if(data[j].year === '2019') 
-    	    					values[i][1] = data[j].count;
-    	    				else
-    	    					values[i][2] = data[j].count;
-		    	        	
-    	    			}
-    	    		}
-    	    	}
-    	    });
-      }
-      
-      callEndpoint();
-      
-      function drawChart() {
-    	  
-    	   for(var i = 0; i < values.length; i++) {
-    		  if(values[i][1] === 0 || values[i][2] === 0) {
-    			  values.splice(i, 1);
-    			  i--;
-    		  }
-    	  }
-
-          var data = new google.visualization.DataTable();
-          data.addColumn('string', 'Mês');
-          data.addColumn('number', '2019');
-          data.addColumn('number', '2020');
-
-          data.addRows(values);
-
-          var options = {
-            chart: {
-              title: 'Óbitos por mês registrados na Urbam',
-              subtitle: 'Com funeral Direto (sem velório) excluindo natimortos e recém nacidos'
-            },
-            width: 900,
-            height: 500,
-            axes: {
-              x: {
-                0: {side: 'botton'}
-              }
-            }
-          };
-
-          var chart = new google.charts.Line(document.getElementById('line_top_x'));
-
-          chart.draw(data, google.charts.Line.convertOptions(options));
-        }
-      
-    </script>
   </head>
   <body>
   	
@@ -92,12 +15,20 @@
   	
   		<div class="card text-center">
   			<div class="card-body">
-   				<!-- <div id="columnchart_material" style="width: 800px; height: 500px;"></div> -->
-   				<div id="line_top_x"></div>
-    			<div id="output"></div>
+   				<div id="chart_months"></div>
     		</div>
     	</div>
+    	
     	<br><br>
+    	
+    	<div class="card text-center">
+  			<div class="card-body">
+   				<div id="chart_months_days"></div>
+    		</div>
+    	</div>
+    	
+    	<br><br>
+    	
     	<div class="card text-center">
     		<div class="card-body">
     			<h5 class="card-title">Sobre o Projeto</h5>
@@ -113,6 +44,10 @@
     </div>
     
     <br><br>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/deaths.js"></script>
     
   </body>
 </html>

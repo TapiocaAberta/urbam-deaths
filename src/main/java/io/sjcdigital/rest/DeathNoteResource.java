@@ -2,9 +2,13 @@ package io.sjcdigital.rest;
 
 import java.net.HttpURLConnection;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -34,6 +38,10 @@ import io.sjcdigital.service.SaveDataService;
 @Produces(MediaType.APPLICATION_JSON)
 public class DeathNoteResource {
 	
+	/*
+	 * { "months": [ "1","2","3","4","5","6" ], "years": [ "2020","2019" ] }
+	 */
+	
 	@Inject
 	SaveDataService saveData;
 	
@@ -42,6 +50,43 @@ public class DeathNoteResource {
 	
 	@Inject
 	PersonRepository repository;
+	
+	@GET
+	@Path("/direto/days/last-mount/compare")
+	public Response compareCountDays() {
+		
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime lastYear = now.minusYears(1);
+		Month lastMonth = now.minusMonths(1).getMonth();
+		List<String> listOfYear = Arrays.asList(String.valueOf(now.getYear()), String.valueOf(lastYear.getYear()));
+		List<Person> findFuneralDireto = repository.findFuneralDireto(listOfYear, Months.withValue(lastMonth.ordinal()).name());
+		Map<String, Long> collect = findFuneralDireto.stream().collect(Collectors.groupingBy(Person::getDeathday, Collectors.counting()));
+		
+		List<List<Integer>> chart = new LinkedList<>();
+		
+		for(int i = 1; i <= lastMonth.maxLength(); i++) {
+			
+			String day = (i < 10 ? "0" : "") + i;
+			String month = (lastMonth.ordinal() < 10 ? "0" : "") + lastMonth.ordinal();
+			
+			String dayMonth = day + "/" + month + "/";
+			List<Integer> dataDay = new LinkedList<Integer>();
+			
+			dataDay.add(i);
+			
+			Long long1 = collect.get(dayMonth + lastYear.getYear());
+			Long long2 = collect.get(dayMonth + now.getYear());
+			
+			dataDay.add(Objects.isNull(long1) ? 0 : long1.intValue());
+			dataDay.add(Objects.isNull(long2) ? 0 : long2.intValue());
+			
+			chart.add(dataDay);
+			
+		}
+		
+		return Response.ok(chart).build();
+		
+	}
 	
 	@GET
 	@Path("/direto/")
