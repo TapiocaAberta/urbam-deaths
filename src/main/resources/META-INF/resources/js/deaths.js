@@ -15,7 +15,7 @@ google.charts.setOnLoadCallback(drawChart2);
    	  				["NOVEMBRO", 0, 0],
    	  				["DEZEMBRO", 0, 0]];
       
-      var daysData;
+      var daysData = [];
       
       function callEndpoint() {
     	    $.getJSON('/api/deaths/direto/compare', function(data) {
@@ -37,7 +37,7 @@ google.charts.setOnLoadCallback(drawChart2);
       
       function callEndpoint2() {
   	    $.getJSON('/api/deaths/direto/days/last-mount/compare', function(data) {
-  	    	daysData = data;
+  	    	this.daysData = data;
   	    });
     }
       
