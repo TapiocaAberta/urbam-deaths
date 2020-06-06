@@ -48,9 +48,9 @@ public class CSVParserTest {
     List<String> yearsHeaders = Arrays.asList("05", "06");
     
     
-    private String registerCSV = "YEAR,MONTH,FUNERAL,05,06\n" +
-            "\"05\",\"01\",\"DIRETO\",\"1\",\"0\"\n" +
-            "\"06\",\"02\",\"OUTRO\",\"0\",\"1\"";
+    private String registerCSV = "YEAR,MONTH,FUNERAL,ID,05,06\n" +
+            "\"05\",\"01\",\"DIRETO\",0,\"1\",\"0\"\n" +
+            "\"06\",\"02\",\"OUTRO\",1,\"0\",\"1\"";
     
     @Test
     public void addToHeaderTest() {

@@ -2,6 +2,7 @@ package io.sjcdigital.parser;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,7 +31,8 @@ public class CSVParser {
     static final String HEADER_REGISTERS = String.join(SEPARATOR,
                                                        "YEAR",
                                                        "MONTH",
-                                                       "FUNERAL");
+                                                       "FUNERAL",
+                                                       "ID");
 
     static final String TEXT_ENCLOSER = "\"";
 
@@ -49,13 +51,16 @@ public class CSVParser {
                             .map(DeathRegister::from).collect(toList());
         var years = registers.stream().map(DeathRegister::getYear).distinct().collect(toList());
         var newHeader = addToHeader(HEADER_REGISTERS, years);
-        return buildCSV(newHeader, registers.stream().map(d -> lineWithYears(d, years)));
+        AtomicInteger id = new AtomicInteger();
+        return buildCSV(newHeader, registers.stream().map(d -> lineWithYears(d, years, id.getAndIncrement())));
     }
 
-    protected String lineWithYears(DeathRegister register, List<String> years) {
+    protected String lineWithYears(DeathRegister register, List<String> years, int id) {
         var yearsValues = yearValues(register.getYear(), years);
+        Stream<Object> additionalColumnsStream = Stream.concat(Stream.of(id),
+                                                               Arrays.stream(yearsValues));
         Object[] lineValues = Stream.concat(Arrays.stream(registerFields(register)),
-                                            Arrays.stream(yearsValues))
+                                            additionalColumnsStream)
                                     .toArray(Object[]::new);
         return line(lineValues);
     }
