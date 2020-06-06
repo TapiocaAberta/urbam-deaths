@@ -3,6 +3,7 @@ package io.sjcdigital.model.repositories;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.management.Query;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.sjcdigital.model.entities.Person;
@@ -37,5 +38,9 @@ public class PersonRepository implements PanacheRepository<Person> {
 	public long countFuneralDiretoByYearAndMonthAndAge(String year, String month) {
 		return count("yearDeath = ?1 and monthDeath = ?2 and age > 0 and funeral = 'DIRETO'", year, month.toUpperCase());
 	}
+
+    public List<Person> findBYears(List<String> years) {
+        return list("yearDeath in (?1)", years);
+    }
 	
 }
