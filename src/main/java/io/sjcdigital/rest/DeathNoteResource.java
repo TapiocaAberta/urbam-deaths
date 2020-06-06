@@ -29,6 +29,7 @@ import io.sjcdigital.model.dto.ScrapDTO;
 import io.sjcdigital.model.entities.Months;
 import io.sjcdigital.model.entities.Person;
 import io.sjcdigital.model.repositories.PersonRepository;
+import io.sjcdigital.parser.CSVParser;
 import io.sjcdigital.service.DeathsScrapper;
 import io.sjcdigital.service.SaveDataService;
 
@@ -50,6 +51,21 @@ public class DeathNoteResource {
 	
 	@Inject
 	PersonRepository repository;
+	
+	@Inject CSVParser csvParser;
+	
+    @GET
+    @Path("/register")
+    @Produces("text/csv;charset=utf-8")
+    public Response summary(@QueryParam("years") String yearsParam) {
+        if (yearsParam == null || yearsParam.isBlank()) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
+        var years = Arrays.asList(yearsParam.split("\\,"));
+        String csvContent = csvParser.parseRegister(repository.findBYears(years));
+        return Response.ok(csvContent).build();
+    }
 	
 	@GET
 	@Path("/direto/days/last-mount/compare")

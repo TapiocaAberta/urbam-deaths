@@ -39,13 +39,11 @@ public class SaveDataService {
     public void save(String fileType, String[] years, String[] months) {
 
         boolean hasMonth = months.length > 0;
-        Map<String, List<Person>> deathsByYear = null;
 
-        FileService fileService = forType(fileType);
+        var fileService = forType(fileType);
 
-        for (int i = 0; i < years.length; i++) {
-            String year = years[i];
-            deathsByYear = hasMonth ? scrapper.getDeathsByYearAndMonth(year, months) : scrapper.getDeathsByYear(year);
+        for (var year : years) {
+            var deathsByYear = hasMonth ? scrapper.getDeathsByYearAndMonth(year, months) : scrapper.getDeathsByYear(year);
             fileService.save(year, deathsByYear);
         }
 
