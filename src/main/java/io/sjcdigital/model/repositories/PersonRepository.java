@@ -45,6 +45,14 @@ public class PersonRepository implements PanacheRepository<Person> {
 	public long countFuneralDiretoByYearAndMonthAndAge(String year, String month) {
 		return count("yearDeath = ?1 and monthDeath = ?2 and age > 0 and funeral = 'DIRETO'", year, month.toUpperCase());
 	}
+	
+	public long countByYearAndMonthAndAge(String year, String month) {
+		return count("yearDeath = ?1 and monthDeath = ?2 and age > 0", year, month.toUpperCase());
+	}
+	
+	public long countByYearAndMonth(String year, String month) {
+		return count("yearDeath = ?1 and monthDeath = ?2", year, month.toUpperCase());
+	}
 
     public List<Person> findBYears(List<String> years) {
         return list("yearDeath in (?1)", years);

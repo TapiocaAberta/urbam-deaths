@@ -177,6 +177,28 @@ public class DeathNoteResource {
 	}
 	
 	@GET
+	@Path("/count")
+	public Response countByYearMonthAndAge( @QueryParam("year") final String year,
+										    @QueryParam("month") final String month,
+										    @QueryParam("byAge") final boolean byAge ) {
+		
+		CountDTO count = CountDTO.create()
+								 .funeral("TODOS")
+								 .month(month)
+								 .year(year)
+								 .nonZeroAge(byAge)
+								 .build();
+		
+		if(byAge) {
+			count.setCount(repository.countByYearAndMonthAndAge(year, month));
+		} else {
+			count.setCount(repository.countByYearAndMonth(year, month));
+		}
+		
+		return Response.ok(count).build();
+	}
+	
+	@GET
 	public Response getByYearAndMonth(@QueryParam("year") final String year, @QueryParam("month") final String month) {
 		
 		if(Objects.nonNull(year) && Objects.nonNull(month)) {
