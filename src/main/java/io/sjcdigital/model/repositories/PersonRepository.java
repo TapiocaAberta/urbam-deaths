@@ -1,11 +1,12 @@
 package io.sjcdigital.model.repositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.management.Query;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.sjcdigital.model.entities.Months;
 import io.sjcdigital.model.entities.Person;
 
 @ApplicationScoped
@@ -13,6 +14,12 @@ public class PersonRepository implements PanacheRepository<Person> {
 
 	public long countFuneralDiretoByYearAndMonth(String year, String month) {
 		return count("yearDeath = ?1 and monthDeath = ?2 and funeral = 'DIRETO'", year, month.toUpperCase());
+	}
+	
+	public List<Person> findCurentMonthDiretoAndAgeMoreThanZedo() {
+		LocalDateTime now = LocalDateTime.now();
+		return list("yearDeath = ?1 and monthDeath = ?2 and funeral = 'DIRETO' and age > 0", String.valueOf(now.getYear()), 
+																				 			 Months.withValue(now.getMonthValue()).name());
 	}
 	
 	public List<Person> findByYear(String year) {

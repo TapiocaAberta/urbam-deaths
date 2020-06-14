@@ -46,11 +46,9 @@ public class DeathNoteResource {
 	@Inject
 	SaveDataService saveData;
 	
-	@Inject
-	DeathsScrapper scrapper;
+	@Inject DeathsScrapper scrapper;
 	
-	@Inject
-	PersonRepository repository;
+	@Inject PersonRepository repository;
 	
 	@Inject CSVParser csvParser;
 	
@@ -65,6 +63,17 @@ public class DeathNoteResource {
         var years = Arrays.asList(yearsParam.split("\\,"));
         String csvContent = csvParser.parseRegister(repository.findBYears(years));
         return Response.ok(csvContent).build();
+    }
+    
+    @GET
+	@Path("/direto/days/current-mount/count")
+	public Response countCurrentMonthDeathDays() {
+    	
+    	Map<String, Long> deaths = repository.findCurentMonthDiretoAndAgeMoreThanZedo().stream()
+    										 	.collect(Collectors.groupingBy(Person::getDeathday, Collectors.counting()));
+    	
+    	return Response.ok(deaths).build();
+    	
     }
 	
 	@GET
@@ -191,6 +200,13 @@ public class DeathNoteResource {
 		
 		return Response.ok(contact).build();
 		
+	}
+	
+	@POST
+	@Path("yesterday")
+	public Response saveYesterdayDeaths() {
+		saveData.saveYesterdayDeaths();
+		return Response.status(Status.CREATED).build();
 	}
 	
 	

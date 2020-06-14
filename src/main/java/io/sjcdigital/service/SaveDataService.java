@@ -1,12 +1,14 @@
 package io.sjcdigital.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,8 +62,28 @@ public class SaveDataService {
                 return jsonService;
         }
     }
+    
+    @Transactional
+    public void saveYesterdayDeaths() {
+    	
+    	LOGGER.info("Starting cron save yesterday deaths ....");
+
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+        String yesterdayFormat = yesterday.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
+        List<Person> yesterdayDeaths =  scrapper.getDeathPersonsByMonthAndYear(	String.valueOf(yesterday.getYear()), 
+        																		Months.withValue(yesterday.getMonthValue()))
+        																		.get(Months.withValue(yesterday.getMonthValue()).name().toLowerCase())
+								        										.stream()
+								        										.filter(p -> p.getDeathday().equals(yesterdayFormat))
+								        										.collect(Collectors.toList());
+        
+        Person.persist(yesterdayDeaths);
+        
+    }
 
     //@Scheduled(cron = "{cron.expr}")
+    @Transactional
     public void saveCurrentMonthAndYearData() {
 
         LOGGER.info("Starting cron ....");
