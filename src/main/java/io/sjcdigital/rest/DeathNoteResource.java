@@ -43,8 +43,7 @@ public class DeathNoteResource {
 	 * { "months": [ "1","2","3","4","5","6" ], "years": [ "2020","2019" ] }
 	 */
 	
-	@Inject
-	SaveDataService saveData;
+	@Inject SaveDataService saveData;
 	
 	@Inject DeathsScrapper scrapper;
 	
@@ -72,7 +71,29 @@ public class DeathNoteResource {
     	Map<String, Long> deaths = repository.findCurentMonthDiretoAndAgeMoreThanZedo().stream()
     										 	.collect(Collectors.groupingBy(Person::getDeathday, Collectors.counting()));
     	
-    	return Response.ok(deaths).build();
+    	List<List<Integer>> chart = new LinkedList<>();
+    	
+    	LocalDateTime now = LocalDateTime.now();
+    	Month currentMonth = now.getMonth();
+    	
+    	for(int i = 1; i < now.getDayOfMonth(); i++) {
+			
+			String day = (i < 10 ? "0" : "") + i;
+			String month = (currentMonth.getValue() < 10 ? "0" : "") + currentMonth.getValue();
+			
+			String dayMonth = day + "/" + month + "/";
+			List<Integer> dataDay = new LinkedList<Integer>();
+			
+			dataDay.add(i);
+			Long deathInDay = deaths.get(dayMonth + now.getYear());
+			
+			dataDay.add(Objects.isNull(deathInDay) ? 0 : deathInDay.intValue());
+			
+			chart.add(dataDay);
+			
+		}
+    	
+    	return Response.ok(chart).build();
     	
     }
 	
@@ -84,7 +105,7 @@ public class DeathNoteResource {
 		LocalDateTime lastYear = now.minusYears(1);
 		Month lastMonth = now.minusMonths(1).getMonth();
 		List<String> listOfYear = Arrays.asList(String.valueOf(now.getYear()), String.valueOf(lastYear.getYear()));
-		List<Person> findFuneralDireto = repository.findFuneralDireto(listOfYear, Months.withValue(lastMonth.ordinal()).name());
+		List<Person> findFuneralDireto = repository.findFuneralDireto(listOfYear, Months.withValue(lastMonth.getValue()).name());
 		Map<String, Long> collect = findFuneralDireto.stream().collect(Collectors.groupingBy(Person::getDeathday, Collectors.counting()));
 		
 		List<List<Integer>> chart = new LinkedList<>();
@@ -92,7 +113,7 @@ public class DeathNoteResource {
 		for(int i = 1; i <= lastMonth.maxLength(); i++) {
 			
 			String day = (i < 10 ? "0" : "") + i;
-			String month = (lastMonth.ordinal() < 10 ? "0" : "") + lastMonth.ordinal();
+			String month = (lastMonth.getValue() < 10 ? "0" : "") + lastMonth.getValue();
 			
 			String dayMonth = day + "/" + month + "/";
 			List<Integer> dataDay = new LinkedList<Integer>();
